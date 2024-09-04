@@ -1,6 +1,17 @@
+import dayjs from "https://unpkg.com/dayjs@1.11.13/esm/index.js";
+import {
+  addingToCart,
+  updateCart
+} from "../data/cart.js";
+import {
+  products
+} from "../data/products.js";
+import formatPrice from "./Utils/money.js";
+
 let productData = ``;
+let today = dayjs();
 products.forEach((product) => {
-	const html = `
+    const html = `
     <div class="product-container">
           <div class="product-image-container">
             <img class="product-image"
@@ -20,7 +31,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            $${(product.priceCents / 100).toFixed(2)}
+            $ ${formatPrice(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
@@ -52,30 +63,15 @@ products.forEach((product) => {
           </button>
         </div>
 `;
-	productData += html;
+    productData += html;
 });
 document.querySelector(".products-grid").innerHTML = productData;
 const addToCartButtons = document.querySelectorAll(".add-to-cart-button");
-let cartQuantity = 0;
 addToCartButtons.forEach((button) => {
-	button.addEventListener("click", () => {
-		let productId = button.dataset.productId;
-		let matchingItem;
-		cart.forEach((item) => {
-			if (item.productId === productId) {
-				matchingItem = item;
-			}
-		});
-		if (matchingItem) {
-			matchingItem.quantity += 1;
-		} else {
-			cart.push({
-				productId: productId,
-				quantity: 1,
-			});
-		}
-		cartQuantity += 1;
-        document.querySelector(".cart-quantity").innerHTML = cartQuantity;
-        
-	});
+    button.addEventListener("click", () => {
+        let matchingItem;
+        let productId = button.dataset.productId;
+        addingToCart(productId, matchingItem);
+        updateCart();
+    });
 });
