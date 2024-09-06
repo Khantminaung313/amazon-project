@@ -11,7 +11,7 @@ export let cart = localStorage.getItem("cart")
             },
             priceCents: 1090,
             deliveryOptionId: "1",
-            quantity: 2,
+            quantity: 1,
             keywords: [
               "socks",
               "sports",
