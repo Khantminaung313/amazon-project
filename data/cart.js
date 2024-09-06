@@ -1,4 +1,7 @@
-export let cart = localStorage.getItem("cart")
+export let cart;
+
+export function loadFromStorage() {
+  cart = localStorage.getItem("cart")
 	? JSON.parse(localStorage.getItem("cart"))
 	: [
         {
@@ -35,6 +38,7 @@ export let cart = localStorage.getItem("cart")
             ]
           },
 	  ];
+}
 
 export const updateCart = () => {
 	let cartQuantity = 0;
@@ -56,7 +60,7 @@ export let addingToCart = (productId, matchingItem) => {
 		cart.push({
 			productId: productId,
 			quantity: 1,
-            deliveryOptionId: 1
+      deliveryOptionId: 1
 		});
 	}
 	saveToLocalStorage();
